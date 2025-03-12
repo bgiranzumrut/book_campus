@@ -6,5 +6,5 @@ class Book < ApplicationRecord
   validates :title, presence: true, uniqueness: true
   validates :description, presence: true
   validates :published_date, presence: true
-  validates :genre, presence: true
+
 end
