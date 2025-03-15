@@ -1,2 +1,4 @@
-<h1>Libraries#show</h1>
-<p>Find me in app/views/libraries/show.html.erb</p>
+<h1><%= @library.name %></h1>
+<p><strong>Address:</strong> <%= @library.address %></p>
+<p><strong>Phone:</strong> <%= @library.phone %></p>
+<%= link_to "Back to Libraries", libraries_path, class: "btn btn-primary" %>

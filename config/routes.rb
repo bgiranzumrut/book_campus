@@ -5,5 +5,7 @@ Rails.application.routes.draw do
   get "/about", to: "pages#about"
   resources :books, only: [:index, :show]
   resources :authors, only: [:index, :show]
+  resources :libraries, only: [:index, :show]
+
 
 end

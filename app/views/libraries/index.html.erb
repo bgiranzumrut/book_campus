@@ -1,2 +1,10 @@
-<h1>Libraries#index</h1>
-<p>Find me in app/views/libraries/index.html.erb</p>
+<h1>Libraries in Winnipeg</h1>
+<ul>
+  <% @libraries.each do |library| %>
+  <li>
+    <strong><%= link_to library.name, library_path(library) %></strong><br>
+    <%= library.address %><br>
+    <%= library.phone %>
+  </li>
+  <% end %>
+</ul>
