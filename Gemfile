@@ -61,3 +61,5 @@ end
 
   gem "faker"
 
+
+gem "kaminari", "~> 1.2"

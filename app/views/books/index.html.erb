@@ -1,6 +1,22 @@
-<h1>All Books</h1>
+<h1>Books</h1>
+
+<!-- Genre Filter -->
+<div>
+  <label>Filter by Genre:</label>
+  <select onchange="location = this.value;">
+    <option value="<%= books_path %>">All Genres</option>
+    <% @genres.each do |genre| %>
+    <option value="<%= books_path(genre: genre) %>" <%= 'selected' if params[:genre] == genre %>>
+      <%= genre %>
+    </option>
+    <% end %>
+  </select>
+</div>
+
+<!-- Book List -->
 <ul>
   <% @books.each do |book| %>
   <li><%= link_to book.title, book_path(book) %> - <%= book.genre %></li>
   <% end %>
 </ul>
+<%= paginate @books %>
