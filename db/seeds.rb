@@ -1,13 +1,17 @@
 require 'faker'
 require 'open-uri'
 require 'json'
+require 'net/http'
 
 # Clear existing data
 Review.destroy_all
 Book.destroy_all
 Author.destroy_all
+Library.destroy_all
 
-
+# -------------------
+# FETCH & SEED BOOK DATA
+# -------------------
 
 # Corrected genre mapping for API
 GENRES = {
@@ -22,15 +26,12 @@ GENRES = {
 GENRES.each do |display_name, api_name|
   puts "Fetching books for genre: #{display_name}..."
 
-  # Fix: Use a local variable instead of a constant
+  # Fetch books from Open Library API
   api_url = "https://openlibrary.org/subjects/#{api_name}.json?limit=10"
-
-  # Fetch books from API
   response = URI.open(api_url).read
   data = JSON.parse(response)
 
   data["works"].each do |book_data|
-    # Handle missing fields
     title = book_data["title"] || "Unknown Title"
     author_name = book_data["authors"]&.first&.dig("name") || "Unknown Author"
 
@@ -39,9 +40,8 @@ GENRES.each do |display_name, api_name|
       a.bio = Faker::Lorem.paragraph
     end
 
-    # Fix: Check if book already exists before creating
-    existing_book = Book.find_by(title: title)
-    unless existing_book
+    # Create book only if it doesn't exist
+    unless Book.exists?(title: title)
       book = Book.create!(
         title: title,
         description: Faker::Lorem.paragraph,
@@ -64,3 +64,31 @@ GENRES.each do |display_name, api_name|
   end
 end
 
+puts "✅ Books and reviews seeded!"
+
+# -------------------
+# FETCH & SEED LIBRARY DATA
+# -------------------
+
+puts "Fetching Winnipeg Libraries data..."
+
+url = URI("https://data.winnipeg.ca/resource/bt47-pkkm.json")
+response = Net::HTTP.get(url)
+data = JSON.parse(response)
+
+data.each do |lib|
+  Library.create!(
+    name: lib["name"],
+    address: lib["address"],
+    wifi: lib["wifi"] == "Yes",
+    accessibility: lib["accessibility"] == "Yes",
+    room_rentals: lib["room_rentals"] == "Yes",
+    parking_lot: lib["parking_lot"] == "Yes",
+    parking_stalls: lib["parking_stalls"].to_i,
+    website: lib["website"],
+    latitude: lib["location_1"]&.dig("latitude")&.to_f,
+    longitude: lib["location_1"]&.dig("longitude")&.to_f
+  )
+end
+
+puts "✅ Libraries seeded successfully!"
