@@ -1,4 +1,12 @@
 class BooksController < ApplicationController
+
+  def show
+    @book = Book.find_by(id: params[:id])
+    if @book.nil?
+      redirect_to books_path, alert: "Book not found"
+    end
+  end
+
   def index
     @genres = Book.distinct.pluck(:genre)
 
