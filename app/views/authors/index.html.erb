@@ -1,12 +1,21 @@
 <h1>Authors</h1>
 
-<ul class="list-group my-4">
+<!-- Search Form -->
+<form method="get" action="<%= authors_path %>" class="mb-3">
+  <div class="input-group">
+    <input type="text" name="query" class="form-control" placeholder="Search authors..." value="<%= params[:query] %>">
+    <button type="submit" class="btn btn-primary">Search</button>
+  </div>
+</form>
+
+<!-- Author List -->
+<ul class="list-group">
   <% @authors.each do |author| %>
-  <li class="list-group-item"><%= link_to author.name, author_path(author), class: "text-dark text-decoration-none" %></li>
+  <li class="list-group-item"><%= link_to author.name, author_path(author) %></li>
   <% end %>
 </ul>
 
-<!-- Styled Pagination -->
-<div class="d-flex justify-content-center">
+<!-- Pagination -->
+<div class="d-flex justify-content-center mt-4">
   <%= paginate @authors %>
 </div>

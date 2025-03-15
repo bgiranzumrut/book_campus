@@ -1,22 +1,36 @@
+<!-- Search & Filter Form -->
+<form method="get" action="<%= books_path %>" class="mb-3">
+  <div class="row">
+    <div class="col-md-6">
+      <input type="text" name="query" class="form-control" placeholder="Search books..." value="<%= params[:query] %>">
+    </div>
+    <div class="col-md-4">
+      <select name="genre" class="form-select">
+        <option value="">All Genres</option>
+        <% @genres.each do |genre| %>
+        <option value="<%= genre %>" <%= 'selected' if params[:genre] == genre %>><%= genre %></option>
+        <% end %>
+      </select>
+    </div>
+    <div class="col-md-2">
+      <button type="submit" class="btn btn-primary w-100">Search</button>
+    </div>
+  </div>
+</form>
+
 <h1>Books</h1>
 
-<!-- Genre Filter -->
-<div>
-  <label>Filter by Genre:</label>
-  <select onchange="location = this.value;">
-    <option value="<%= books_path %>">All Genres</option>
-    <% @genres.each do |genre| %>
-    <option value="<%= books_path(genre: genre) %>" <%= 'selected' if params[:genre] == genre %>>
-      <%= genre %>
-    </option>
-    <% end %>
-  </select>
-</div>
-
-<!-- Book List -->
-<ul>
+<% if @books.any? %>
+<ul class="list-group">
   <% @books.each do |book| %>
-  <li><%= link_to book.title, book_path(book) %> - <%= book.genre %></li>
+  <li class="list-group-item"><%= link_to book.title, book_path(book) %> - <%= book.genre %></li>
   <% end %>
 </ul>
-<%= paginate @books %>
+<% else %>
+<p class="text-muted">No books found. Try adding some or checking your filters.</p>
+<% end %>
+
+<!-- Pagination -->
+<div class="d-flex justify-content-center mt-4">
+  <%= paginate @books %>
+</div>
