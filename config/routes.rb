@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get "libraries/index"
+  get "libraries/show"
   root "pages#home"
   get "/about", to: "pages#about"
   resources :books, only: [:index, :show]
