@@ -1,0 +1,13 @@
+@import "bootstrap";
+// Bootstrap 5 Pagination Styling for Kaminari
+.pagination {
+  @extend .pagination;
+}
+
+.page-item {
+  @extend .page-item;
+}
+
+.page-link {
+  @extend .page-link;
+}

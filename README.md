@@ -1,24 +1,46 @@
-# README
+## Add bootsrapt to your project
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+https://gist.github.com/rubyandcoffee/592cdf13586548a7a26c30adeeb7adc2
 
-Things you may want to cover:
+### Edit gem file
+gem "bootstrap"
+gem "sassc-rails"
 
-* Ruby version
+### Then, run:
+bundle install
 
-* System dependencies
+### Set up Frontent Dependecies
 
-* Configuration
+bin/importmap pin bootstrap
+bin/importmap pin popperjs/core
 
-* Database creation
+### manually edit config/importmap.rb and ensure you have the following:
 
-* Database initialization
+pin "popper", to: "https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+pin "bootstrap", to: "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
 
-* How to run the test suite
 
-* Services (job queues, cache servers, search engines, etc.)
+### Rename application.css to application.scss and add
 
-* Deployment instructions
+@import "bootstrap";
 
-* ...
+@import "bootstrap-icons/font/bootstrap-icons";
+
+
+### Open app/javascript/application.js and add:
+
+import "bootstrap"
+import "popper"
+
+
+### Open config/initializers/assets.rb and add:
+
+Rails.application.config.assets.precompile += %w( bootstrap.min.js popper.js )
+
+### rails assets:precompile
+rails server
+
+### Test it
+
+
+

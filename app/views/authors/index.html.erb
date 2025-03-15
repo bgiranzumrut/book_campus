@@ -1,6 +1,12 @@
 <h1>Authors</h1>
-<ul>
+
+<ul class="list-group my-4">
   <% @authors.each do |author| %>
-  <li><%= author.name %></li>
+  <li class="list-group-item"><%= link_to author.name, author_path(author), class: "text-dark text-decoration-none" %></li>
   <% end %>
 </ul>
+
+<!-- Styled Pagination -->
+<div class="d-flex justify-content-center">
+  <%= paginate @authors %>
+</div>
