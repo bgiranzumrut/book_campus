@@ -67,7 +67,6 @@ GENRES.each do |display_name, api_name|
   end
 end
 
-puts " Books and reviews seeded!"
 
 # -------------------
 # FETCH & SEED LIBRARY DATA
@@ -93,5 +92,3 @@ data.each do |lib|
     longitude: lib["location_1"]&.dig("longitude")&.to_f
   )
 end
-
-puts "Libraries seeded successfully!"
