@@ -8,12 +8,12 @@ Review.destroy_all
 Book.destroy_all
 Author.destroy_all
 Library.destroy_all
+AuthorBook.destroy_all  # Clearing the join table
 
 # -------------------
 # FETCH & SEED BOOK DATA
 # -------------------
 
-# Corrected genre mapping for API
 GENRES = {
   "Poetry" => "poetry",
   "Fiction" => "fiction",
@@ -33,38 +33,41 @@ GENRES.each do |display_name, api_name|
 
   data["works"].each do |book_data|
     title = book_data["title"] || "Unknown Title"
-    author_name = book_data["authors"]&.first&.dig("name") || "Unknown Author"
 
-    # Find or create author
-    author = Author.find_or_create_by(name: author_name) do |a|
-      a.bio = Faker::Lorem.paragraph
+    # Find or create the book only if it doesn't exist
+    book = Book.find_or_create_by!(title: title) do |b|
+      b.description = Faker::Lorem.paragraph
+      b.published_date = Faker::Date.between(from: '1800-01-01', to: '2023-12-31')
+      b.cover_image = "https://covers.openlibrary.org/b/id/#{book_data.dig('cover_id')}-L.jpg"
+      b.genre = display_name
     end
 
-    # Create book only if it doesn't exist
-    unless Book.exists?(title: title)
-      book = Book.create!(
-        title: title,
-        description: Faker::Lorem.paragraph,
-        published_date: Faker::Date.between(from: '1800-01-01', to: '2023-12-31'),
-        cover_image: "https://covers.openlibrary.org/b/id/#{book_data.dig('cover_id')}-L.jpg",
-        genre: display_name,
-        author: author
-      )
+    # Assign multiple authors
+    authors = book_data["authors"] || []
+    authors.each do |author_info|
+      author_name = author_info["name"] || "Unknown Author"
 
-      # Create fake reviews for each book
-      rand(2..5).times do
-        Review.create!(
-          user_name: Faker::Name.name,
-          rating: rand(1..5),
-          comment: Faker::Lorem.sentence,
-          book: book
-        )
+      author = Author.find_or_create_by!(name: author_name) do |a|
+        a.bio = Faker::Lorem.paragraph
       end
+
+      # Link author to book in many-to-many table
+      book.authors << author unless book.authors.include?(author)
+    end
+
+    # Create fake reviews for each book
+    rand(2..5).times do
+      Review.create!(
+        user_name: Faker::Name.name,
+        rating: rand(1..5),
+        comment: Faker::Lorem.sentence,
+        book: book
+      )
     end
   end
 end
 
-puts "✅ Books and reviews seeded!"
+puts " Books and reviews seeded!"
 
 # -------------------
 # FETCH & SEED LIBRARY DATA
@@ -91,4 +94,4 @@ data.each do |lib|
   )
 end
 
-puts "✅ Libraries seeded successfully!"
+puts "Libraries seeded successfully!"

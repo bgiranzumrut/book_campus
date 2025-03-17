@@ -30,3 +30,17 @@ class BooksController < ApplicationController
     @books = @books.page(params[:page]).per(10)
   end
 end
+
+def show
+  @book = Book.find(params[:id])
+  @reviews = @book.reviews.order(created_at: :desc)
+end
+
+def show
+  @book = Book.find(params[:id])
+  @reviews = @book.reviews.order(created_at: :desc) || [] # Sort reviews newest to oldest
+end
+
+
+
+

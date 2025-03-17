@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_03_15_201908) do
+ActiveRecord::Schema[7.2].define(version: 2025_03_17_022501) do
+  create_table "author_books", force: :cascade do |t|
+    t.integer "author_id", null: false
+    t.integer "book_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["author_id"], name: "index_author_books_on_author_id"
+    t.index ["book_id"], name: "index_author_books_on_book_id"
+  end
+
   create_table "authors", force: :cascade do |t|
     t.string "name"
     t.text "bio"
@@ -24,17 +33,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_15_201908) do
     t.date "published_date"
     t.string "cover_image"
     t.string "genre"
-    t.integer "author_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["author_id"], name: "index_books_on_author_id"
-  end
-
-  create_table "bookstores", force: :cascade do |t|
-    t.string "name"
-    t.string "address"
-    t.float "latitude"
-    t.float "longitude"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -65,6 +63,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_15_201908) do
     t.index ["book_id"], name: "index_reviews_on_book_id"
   end
 
-  add_foreign_key "books", "authors"
+  add_foreign_key "author_books", "authors"
+  add_foreign_key "author_books", "books"
   add_foreign_key "reviews", "books"
 end
