@@ -1,8 +1,51 @@
-<h1>About</h1>
-<p> Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptatum doloribus voluptates incidunt culpa id ipsam quibusdam quaerat amet quae magnam.</p>
+<!-- About Page for Book Campus -->
+
+<h1>About Winnipeg Book Campus</h1>
+<p>
+  Welcome to <strong>Book Campus</strong>, your go-to platform for discovering books and public libraries in the city. Whether you're an avid reader searching for your next favorite book or looking for a nearby library with essential services, our platform makes the process seamless and enjoyable.
+</p>
+
+<h2>Why Book Campus?</h2>
+<ul>
+  <li>
+    <strong>Browse Books:</strong> Explore a vast collection of books across different genres, complete with descriptions, author details, and cover images.
+  </li>
+  <li>
+    <strong> Leave Reviews:</strong> Share your thoughts on books and read reviews from fellow readers to find highly-rated recommendations.
+  </li>
+  <li>
+    <strong> Find Libraries:</strong> Use our interactive map to locate public libraries in the city, complete with accessibility details, WiFi availability, and parking options.
+  </li>
+  <li>
+    <strong> Search & Filter:</strong> Easily search books by title, genre, or author and find libraries based on location and amenities.
+  </li>
+  <li>
+    <strong>Real-Time Data:</strong> Book and library information is dynamically fetched and updated, ensuring accuracy and relevancy.
+  </li>
+</ul>
 
 <h2>Data Sources</h2>
 <ul>
-  <li>Books are fetched from the <a href="https://openlibrary.org" target="_blank">Open Library API</a>.</li>
-  <li>Reviews are generated using the <a href="https://github.com/faker-ruby/faker" target="_blank">Faker Gem</a>.</li>
+  <li>
+    <strong>Books & Authors:</strong> Data is retrieved from the
+    <a href="https://openlibrary.org" target="_blank">Open Library API</a>, providing access to a vast collection of book metadata.
+  </li>
+  <li>
+    <strong>Reviews:</strong> Reviews are generated using the
+    <a href="https://github.com/faker-ruby/faker" target="_blank">Faker Gem</a> for testing and seeded content.
+  </li>
+  <li>
+    <strong>Libraries:</strong> Public library locations and details are sourced from the
+    <a href="https://data.winnipeg.ca" target="_blank">City of Winnipeg Open Data Portal</a>.
+  </li>
+  <li>
+    <strong>Google Maps API:</strong> An interactive map provides real-time library locations and navigation assistance.
+  </li>
 </ul>
+
+<h2>Join the Community</h2>
+<p>
+  Whether you're a casual reader, a student, or a researcher, <strong>Book Campus</strong> is designed to enhance your reading experience. Explore books, leave reviews, and find libraries that meet your needs. Start your literary journey today!
+</p>
+
+<%= link_to "Back to Home", root_path, class: "btn btn-primary mt-3" %>

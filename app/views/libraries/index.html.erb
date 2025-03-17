@@ -9,9 +9,6 @@
   <p><strong>WiFi:</strong> <%= library.wifi ? "Available" : "Not Available" %></p>
   <p><strong>Accessibility:</strong> <%= library.accessibility ? "Yes" : "No" %></p>
   <p><strong>Parking:</strong> <%= library.parking_lot ? "Available" : "Not Available" %> (<%= library.parking_stalls %> stalls)</p>
-  <% if library.website.present? %>
-  <p><%= link_to "Website", library.website, target: "_blank" %></p>
-  <% end %>
 </div>
 <% end %>
 
